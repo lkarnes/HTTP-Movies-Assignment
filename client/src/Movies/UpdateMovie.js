@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {Redirect} from 'react-router-dom';
 
 const intialItem = {
     id: null,
@@ -28,6 +27,12 @@ const UpdateMovie = (props) => {
             ...movie,
             [e.target.name]: e.target.value,
         })
+        if(e.target.name === 'stars'){
+            setMovie({
+                ...movie,
+                [e.target.name] : e.target.value.split(',')
+            })
+        }
     }
 
     const onSubmit = e => {
@@ -40,12 +45,16 @@ const UpdateMovie = (props) => {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form className='form' onSubmit={onSubmit}>
+            <h3>title</h3>
             <input type="text" name="title" onChange={changeHandler} placeholder="title" value={movie.title}/>
+            <h3>Director</h3>
             <input type="text" name="director" onChange={changeHandler} placeholder="director" value={movie.director}/>
-            <input type="text" name="metascore" onChange={changeHandler} placeholder="metascore" value={movie.metascore}/>
-            <input type='text' name='stars' onChange={changeHandler} placeholder='stars' value={movie.stars}/>
-            <button type='submit'>Submit</button>
+            <h3>MetaScore</h3>
+            <input type="number" name="metascore" onChange={changeHandler} placeholder="metascore" value={movie.metascore}/>
+            <h3>Actors</h3>
+            <textarea className='textarea'type='text' name='stars' onChange={changeHandler} placeholder='stars' value={movie.stars}/>
+            <button className='submit-button' type='submit'>Submit</button>
         </form>
     )
 }
